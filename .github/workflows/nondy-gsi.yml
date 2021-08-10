@@ -32,7 +32,7 @@ jobs:
        
        - name: Setting up Extraction requirements
          run: |
-              sudo chmod -R 777 ErfanGSIs
+              sudo chmod -R 777 firmware_extractor
               cd firmware_extractor
               sudo apt install unace unrar zip unzip p7zip-full p7zip-rar sharutils rar uudeview mpack arj cabextract rename
               sudo apt install liblzma-dev python-pip brotli lz4
