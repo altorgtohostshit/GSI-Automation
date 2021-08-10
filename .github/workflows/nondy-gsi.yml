@@ -28,7 +28,7 @@ jobs:
 
        
        - name: Clone Firm Extractor Source Code
-         run: https://github.com/erfanoabdi/firmware_extractor firmware_extractor
+         run: git clone https://github.com/erfanoabdi/firmware_extractor firmware_extractor
        
        - name: Setting up Extraction requirements
          run: |
