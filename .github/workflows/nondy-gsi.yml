@@ -28,7 +28,7 @@ jobs:
 
        
        - name: Clone Firm Extractor Source Code
-         run: git clone https://github.com/erfanoabdi/firmware_extractor firmware_extractor
+         run: git clone --recurse-submodules https://github.com/erfanoabdi/Firmware_extractor.git firmware_extractor && git clone --recurse-submodules https://github.com/Area69Lab/ErfanGSIs ErfanGSIs && cd ErfanGSIs && sudo bash setup.sh
        
        - name: DO SHIT
          run: |
