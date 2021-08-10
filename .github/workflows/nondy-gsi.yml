@@ -30,23 +30,15 @@ jobs:
        - name: Clone Firm Extractor Source Code
          run: git clone https://github.com/erfanoabdi/firmware_extractor firmware_extractor
        
-       - name: Setting up Extraction requirements
+       - name: DO SHIT
          run: |
               sudo chmod -R 777 firmware_extractor
               cd firmware_extractor
               sudo apt install unace unrar zip unzip p7zip-full p7zip-rar sharutils rar uudeview mpack arj cabextract rename
               sudo apt install liblzma-dev python-pip brotli
               sudo pip install backports.lzma protobuf pycrypto
-       
-       - name: Download Stock Rom & Generate Images
-         run: |
-               cd firmware_extractor
-               wget -o firmware.zip https://oxygenos.oneplus.net/OnePlus6Oxygen_22.Y.76_OTA_0760_all_2107130227_0263a33cf60f4185.zip
-               sudo ./extractor.sh
-       
-       - name: Zip Aonly and upload 
-         run: |
-              cd firmware_extractor
+              wget -o firmware.zip https://oxygenos.oneplus.net/OnePlus6Oxygen_22.Y.76_OTA_0760_all_2107130227_0263a33cf60f4185.zip
+              sudo ./extractor.sh firmware.zip
               sudo chmod -R 777 out
               cd out
               zip -r9 kek.zip *
