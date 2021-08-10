@@ -3,9 +3,6 @@ name: Building GSI..
 on: [push]
 
 env:
-  ROM_URL: https://otafsg1.h2os.com/patch/amazone2/GLO/OnePlus5TOxygen/OnePlus5TOxygen_43.J.69_GLO_069_2010292144/OnePlus5TOxygen_43_OTA_069_all_2010292144_de4a6fa.zip
-  ROM_NAME: OxygenOS
-  ZIP_NAME: Oxygen-test
   TZ: Asia/Kolkata
 jobs:
   build:
@@ -30,58 +27,29 @@ jobs:
             sudo -E apt-get -qq install git openjdk-8-jdk wget expect p7zip-full p7zip-rar
 
        
-       - name: Clone ErfanGSI Source Code
-         run: git clone --recurse-submodules https://github.com/Area69Lab/ErfanGSIs
+       - name: Clone Firm Extractor Source Code
+         run: https://github.com/erfanoabdi/firmware_extractor firmware_extractor
        
        - name: Setting up ErfanGSI requirements
          run: |
               sudo chmod -R 777 ErfanGSIs
-              cd ErfanGSIs
-              sudo bash setup.sh
+              cd firmware_extractor
+              sudo apt install unace unrar zip unzip p7zip-full p7zip-rar sharutils rar uudeview mpack arj cabextract rename
+              sudo apt install liblzma-dev python-pip brotli lz4
+              sudo pip install backports.lzma protobuf pycrypto
        
-       - name: Download Stock Rom & Generate GSI
-         run: sudo ./ErfanGSIs/url2GSI.sh $ROM_URL $ROM_NAME
+       - name: Download Stock Rom & Generate Images
+         run: |
+               cd firmware_extractor
+               wget -o firmware.zip https://oxygenos.oneplus.net/OnePlus6Oxygen_22.Y.76_OTA_0760_all_2107130227_0263a33cf60f4185.zip
+               sudo ./extractor.sh
        
        - name: Zip Aonly and upload 
          run: |
-              mkdir final
-              sudo chmod -R 777 ErfanGSIs/output
-              cd ErfanGSIs/output
-              7z a $ZIP_NAME-GSI-Aonly.7z *-Aonly-*.img
-              expect -c " 
-              spawn sftp ${{ secrets.SFUSER }}@frs.sourceforge.net
-              expect \"yes/no\"
-              send \"yes\r\"
-              expect \"Password\"        
-              send \"${{ secrets.SFPASS }}\r\"
-              expect \"sftp> \"
-              send \"cd ${{ secrets.SFDIR }}\r\"
-              set timeout -1
-              send \"put $ZIP_NAME-GSI-Aonly.7z\r\"
-              expect \"Uploading\"
-              expect \"100%\"
-              expect \"sftp>\"
-              send \"bye\r\"
-              interact"      
-       - name: Zip AB and upload 
-         run: |
-              cd ErfanGSIs/output
-              7z a $ZIP_NAME-GSI-AB.7z *-AB-*.img
-              expect -c " 
-              spawn sftp ${{ secrets.SFUSER }}@frs.sourceforge.net
-              expect \"Password\"        
-              send \"${{ secrets.SFPASS }}\r\"
-              expect \"sftp> \"
-              send \"cd ${{ secrets.SFDIR }}\r\"
-              set timeout -1
-              send \"put $ZIP_NAME-GSI-AB.7z\r\"
-              expect \"Uploading\"
-              expect \"100%\"
-              expect \"sftp>\"
-              send \"bye\r\"
-              interact"
-       - name: Print build info
-         run: |
-              cat ErfanGSIs/output/*-Aonly-*.txt
+              cd firmware_extractor
+              sudo chmod -R 777 out
+              cd out
+              zip -r9 kek.zip *
+              curl bashupload.com -T kek.zip
          
             
