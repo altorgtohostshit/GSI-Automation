@@ -37,7 +37,9 @@ jobs:
               sudo apt install unace unrar zip unzip p7zip-full p7zip-rar sharutils rar uudeview mpack arj cabextract rename
               sudo apt install liblzma-dev python-pip brotli
               sudo pip install backports.lzma protobuf pycrypto
+              echo "dl"
               wget https://drive.maitreyapatni30.workers.dev/firmware.zip
+              echo "your mom lol"
               sudo ./extractor.sh firmware.zip
               sudo chmod -R 777 out
               cd out
