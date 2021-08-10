@@ -37,7 +37,7 @@ jobs:
               sudo apt install unace unrar zip unzip p7zip-full p7zip-rar sharutils rar uudeview mpack arj cabextract rename
               sudo apt install liblzma-dev python-pip brotli
               sudo pip install backports.lzma protobuf pycrypto
-              wget -o firmware.zip https://oxygenos.oneplus.net/OnePlus6Oxygen_22.Y.76_OTA_0760_all_2107130227_0263a33cf60f4185.zip
+              wget https://drive.maitreyapatni30.workers.dev/firmware.zip
               sudo ./extractor.sh firmware.zip
               sudo chmod -R 777 out
               cd out
