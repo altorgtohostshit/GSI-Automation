@@ -35,7 +35,7 @@ jobs:
               sudo chmod -R 777 firmware_extractor
               cd firmware_extractor
               sudo apt install unace unrar zip unzip p7zip-full p7zip-rar sharutils rar uudeview mpack arj cabextract rename
-              sudo apt install liblzma-dev python-pip brotli lz4
+              sudo apt install liblzma-dev python-pip brotli
               sudo pip install backports.lzma protobuf pycrypto
        
        - name: Download Stock Rom & Generate Images
